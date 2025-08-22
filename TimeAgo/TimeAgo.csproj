@@ -2,11 +2,11 @@
 
     <PropertyGroup>
         <TargetFrameworks>netstandard2.0;net8.0</TargetFrameworks>
-        <Version>1.0.8.0</Version>
+        <Version>1.1.0.0</Version>
         <Authors>Nick Strupat</Authors>
         <Product>TimeAgo.Core</Product>
         <Description>A simple library to format DateTime into 'time ago' strings.</Description>
-        <Copyright>Copyright © 2015</Copyright>
+        <Copyright>Copyright © 2025</Copyright>
         <NoWarn>CS8618</NoWarn>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <PackageId>TimeAgo.Core</PackageId>
