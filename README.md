@@ -1,12 +1,18 @@
-# ABANDONED: This project is no longer being supported by myself.
-I recommend using a better project: https://github.com/Humanizr/Humanizer
+# TimeAgo.Core
 
-# TimeAgo
-Get a string showing how long ago a DateTime was, for example '4 minutes ago' in many languages
+This is a modernized fork of the original [TimeAgo library by Nick Strupat](https://github.com/NickStrupat/TimeAgo). The goal of this version is to update the project to modern .NET standards (.NET Standard 2.0 and .NET 8.0).
 
-NuGet package listed on nuget.org at https://www.nuget.org/packages/TimeAgo/
+A big thank you to Nick Strupat for creating the original project.
 
-[![NuGet Status](http://img.shields.io/nuget/v/TimeAgo.svg?style=flat)](https://www.nuget.org/packages/TimeAgo/)
+For more advanced and feature-rich date/time humanization, I highly recommend using the excellent [Humanizer](https://github.com/Humanizr/Humanizer) library.
+
+---
+
+Get a string showing how long ago a DateTime was, for example '4 minutes ago' in many languages.
+
+[![NuGet Status](http://img.shields.io/nuget/v/TimeAgo.Core.svg?style=flat)](https://www.nuget.org/packages/TimeAgo.Core/)
+
+## Usage
 
     var dateTime = ...some time in the past...
     var timeAgoInCurrentCulture = dateTime.TimeAgo(); // 54 seconds ago
