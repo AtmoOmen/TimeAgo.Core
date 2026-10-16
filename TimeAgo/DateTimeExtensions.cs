@@ -15,7 +15,11 @@ public static class DateTimeExtensions
         if (cultureInfo == null)
             throw new ArgumentNullException(nameof(cultureInfo));
 
-        var timeSpan              = relativeTo - dateTime;
+        var timeSpan = relativeTo - dateTime;
+        var isFuture = timeSpan < TimeSpan.Zero;
+        if (isFuture)
+            timeSpan = timeSpan.Negate();
+
         var dateTimeFormatStrings = GetFormatString(cultureInfo);
         switch (timeSpan.Days)
         {
@@ -24,6 +28,8 @@ public static class DateTimeExtensions
                 var years = timeSpan.Days / 365;
                 if (timeSpan.Days % 365 != 0)
                     years += 1;
+                if (isFuture)
+                    return string.Format(years == 1 ? dateTimeFormatStrings.YearAhead : dateTimeFormatStrings.YearsAhead, years);
                 return string.Format(years == 1 ? dateTimeFormatStrings.YearAgo : dateTimeFormatStrings.YearsAgo, years);
             }
             case > 30:
@@ -31,22 +37,39 @@ public static class DateTimeExtensions
                 var months = timeSpan.Days / 30;
                 if (timeSpan.Days % 31 != 0)
                     months += 1;
+                if (isFuture)
+                    return string.Format(months == 1 ? dateTimeFormatStrings.MonthAhead : dateTimeFormatStrings.MonthsAhead, months);
                 return string.Format(months == 1 ? dateTimeFormatStrings.MonthAgo : dateTimeFormatStrings.MonthsAgo, months);
             }
             case > 0:
+                if (isFuture)
+                    return string.Format(timeSpan.Days == 1 ? dateTimeFormatStrings.DayAhead : dateTimeFormatStrings.DaysAhead, timeSpan.Days);
                 return string.Format(timeSpan.Days == 1 ? dateTimeFormatStrings.DayAgo : dateTimeFormatStrings.DaysAgo, timeSpan.Days);
         }
 
         if (timeSpan.Hours > 0)
+        {
+            if (isFuture)
+                return string.Format(timeSpan.Hours == 1 ? dateTimeFormatStrings.HourAhead : dateTimeFormatStrings.HoursAhead, timeSpan.Hours);
             return string.Format(timeSpan.Hours == 1 ? dateTimeFormatStrings.HourAgo : dateTimeFormatStrings.HoursAgo, timeSpan.Hours);
+        }
+
         if (timeSpan.Minutes > 0)
+        {
+            if (isFuture)
+                return string.Format(timeSpan.Minutes == 1 ? dateTimeFormatStrings.MinuteAhead : dateTimeFormatStrings.MinutesAhead, timeSpan.Minutes);
             return string.Format(timeSpan.Minutes == 1 ? dateTimeFormatStrings.MinuteAgo : dateTimeFormatStrings.MinutesAgo, timeSpan.Minutes);
+        }
 
         return timeSpan.Seconds switch
         {
-            > 1 or 0 => string.Format(dateTimeFormatStrings.SecondsAgo, timeSpan.Seconds),
-            1        => string.Format(dateTimeFormatStrings.SecondAgo,  timeSpan.Seconds),
-            _        => throw new NotSupportedException("The DateTime object does not have a supported value.")
+            > 1 or 0 => isFuture
+                ? string.Format(dateTimeFormatStrings.SecondsAhead, timeSpan.Seconds)
+                : string.Format(dateTimeFormatStrings.SecondsAgo, timeSpan.Seconds),
+            1 => isFuture
+                ? string.Format(dateTimeFormatStrings.SecondAhead, timeSpan.Seconds)
+                : string.Format(dateTimeFormatStrings.SecondAgo, timeSpan.Seconds),
+            _ => throw new NotSupportedException("The DateTime object does not have a supported value.")
         };
     }
 

@@ -14,4 +14,16 @@ internal class DateTimeFormatStrings
     public string MonthsAgo;
     public string YearAgo;
     public string YearsAgo;
+    public string SecondAhead;
+    public string SecondsAhead;
+    public string MinuteAhead;
+    public string MinutesAhead;
+    public string HourAhead;
+    public string HoursAhead;
+    public string DayAhead;
+    public string DaysAhead;
+    public string MonthAhead;
+    public string MonthsAhead;
+    public string YearAhead;
+    public string YearsAhead;
 }
